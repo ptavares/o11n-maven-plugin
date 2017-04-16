@@ -74,9 +74,11 @@ public class DeployMojo extends AbstractO11nMojo {
                     getLog().info("Successfully restart requested vRO service");
                     if (isWaitForRestart() && waitForRestart()) {
                         getLog().info("Successfully restart vRO service");
+                    } else {
+                        logAndThrowFailureException("Failed to restart vRO service");
                     }
                 } else {
-                    logAndThrowFailureException("Failed to restart vRO service");
+                    logAndThrowFailureException("Failed to request restart vRO service");
                 }
             } else {
                 logAndThrowFailureException(String.format("Failed to install plugin '%s'", getFileName() + getBundle().getFileSuffix()));
