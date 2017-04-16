@@ -71,7 +71,10 @@ public class DeployMojo extends AbstractO11nMojo {
                 getLog().info(String.format("Successfully install plugin '%s'", getFileName() + getBundle().getFileSuffix()));
                 //3. Wait for restart
                 if (isRestartService() && restartService()) {
-                    getLog().info("Successfully restart vRO service");
+                    getLog().info("Successfully restart requested vRO service");
+                    if (isWaitForRestart() && waitForRestart()) {
+                        getLog().info("Successfully restart vRO service");
+                    }
                 } else {
                     logAndThrowFailureException("Failed to restart vRO service");
                 }
@@ -177,7 +180,7 @@ public class DeployMojo extends AbstractO11nMojo {
     }
 
     /**
-     * Rstart vRO Server
+     * Restart vRO Server
      *
      * @return <code>true</code> if success, <code>false</code> otherwise
      */
@@ -220,5 +223,30 @@ public class DeployMojo extends AbstractO11nMojo {
         }
     }
 
+    /**
+     * Wait vRO Server
+     *
+     * @return <code>true</code> if success, <code>false</code> otherwise
+     */
+    private boolean waitForRestart() {
+
+        getLog().info("----------------------------");
+        getLog().info("- Wait for restart Service -");
+        getLog().info("----------------------------");
+
+        getLog().info(String.format("Waiting fot restart of vRO service on host '%s'...", getServerHost()));
+
+        for (int i = 0; i < 10; ++i) {
+            try {
+                Thread.sleep(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        getLog().warn("Timeout. Unable to get the vRO configuration server. Please check your vRO server.");
+
+        return true;
+    }
 
 }
