@@ -197,27 +197,25 @@ public class DeployMojo extends AbstractO11nMojo {
 
         // Execute Request
         RestResponse response = this.restClient.executeConfigRequest(restRequest);
+        // Extract current status here.
+        String currentStatus = response.getResponseBody();
         // Analyse status code
         switch (response.getStatusCode()) {
             case 200:
             case 201:
-                // Don't use JsonObject.getString since the returned currentStatus might be null
-                // Rather use JsonObject.get which will return the value or JsonValue.NULL if it's null
-                // In addition JsonObject.isNull(String key) can be used for testing the retun value
-                getLog().debug("Orchestrator service status: '" + /* statusResponse.get("currentStatus") +*/ "'.");
-                getLog().debug("Triggered Orchestrator service restart.");
+                getLog().debug(String.format("vRO service status : %s", currentStatus));
                 return true;
             case 401:
-                getLog().warn("HTTP 401. Authentication is required to restart the Orchestrator service.");
+                getLog().warn("HTTP 401. Authentication is required to restart the vRO service.");
                 return false;
             case 403:
-                getLog().warn("HTTP 403. The provided user is not authorized to restart the Orchestrator service.");
+                getLog().warn("HTTP 403. The provided user is not authorized to restart the vRO service.");
                 return false;
             case 404:
-                getLog().warn("HTTP 404. The requested resource was not found. Make sure you entered the correct VMware Orchestrator URL and that VMware Orchestrator is reachable under that URL from the machine running this Maven Mojo.");
+                getLog().warn("HTTP 404. The requested resource was not found. Please check vRO Server URL configuration and ensure that vRO Server is reachable from the machine running this Maven Mojo.");
                 return false;
             default:
-                getLog().warn("Unknown status code HTTP " + response.getStatusCode() + " returned from vRO Server. Please verify if the vRO Server service has been restarted. Got no idea !");
+                getLog().warn("Unknown status code HTTP " + response.getStatusCode() + " returned from vRO Server. Please verify if the vRO service has been restarted. Got no idea !");
                 return false;
         }
     }
