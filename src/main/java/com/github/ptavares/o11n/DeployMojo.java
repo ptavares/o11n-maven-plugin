@@ -105,11 +105,11 @@ public class DeployMojo extends AbstractO11nMojo {
 
         // Prepare Request
         RestRequest restRequest = new RestRequest();
-        restRequest.setHttpAuthentication(getServiceUser(), getServicePassword());
-        // Need to set package name with tailing dot (.) character
-        restRequest.setResource("/packages/" + getPackageName() + ".");
-        restRequest.addQueryParam("option", getDeleteStrategy().getLabel());
-        restRequest.setMethod(RestRequest.Method.Delete);
+        restRequest.setHttpAuthentication(getServiceUser(), getServicePassword())
+                // Need to set package name with tailing dot (.) character
+                .setResource("/packages/" + getPackageName() + ".")
+                .addQueryParam("option", getDeleteStrategy().getLabel())
+                .setMethod(RestRequest.Method.Delete);
         // Execute Request
         RestResponse response = this.restClient.executeServiceRequest(restRequest);
         // Analyse status code
@@ -151,10 +151,10 @@ public class DeployMojo extends AbstractO11nMojo {
 
         // Prepare Request
         RestRequest restRequest = new RestRequest();
-        restRequest.setHttpAuthentication(getServiceUser(), getServicePassword());
-        restRequest.setResource("/plugins/");
-        restRequest.setMethod(RestRequest.Method.Post);
-        restRequest.addPluginFile(pluginFile.toFile(), getBundle(), isOverwrite());
+        restRequest.setHttpAuthentication(getServiceUser(), getServicePassword())
+                .setResource("/plugins/")
+                .setMethod(RestRequest.Method.Post)
+                .addPluginFile(pluginFile.toFile(), getBundle(), isOverwrite());
         // Execute Request
         RestResponse response = this.restClient.executeServiceRequest(restRequest);
         // Analyse status code
@@ -196,9 +196,9 @@ public class DeployMojo extends AbstractO11nMojo {
 
         // Prepare Request
         RestRequest restRequest = new RestRequest();
-        restRequest.setHttpAuthentication(getConfigUser(), getConfigPassword());
-        restRequest.setResource("/server/status/restart");
-        restRequest.setMethod(RestRequest.Method.Post);
+        restRequest.setHttpAuthentication(getConfigUser(), getConfigPassword())
+                .setResource("/server/status/restart")
+                .setMethod(RestRequest.Method.Post);
 
         // Execute Request
         RestResponse response = this.restClient.executeConfigRequest(restRequest);

@@ -5,42 +5,65 @@ import com.github.ptavares.o11n.enums.FileBundle;
 import java.io.File;
 
 /**
- * Created by Patrick on 15/04/2017.
+ * Store plugin file information
+ *
+ * @author Patrick Tavares
  */
 public class PluginFileInfo {
 
-    private File pluginFile;
-    private FileBundle fileBundle;
-    private boolean overwrite;
+    /**
+     * The plugin file
+     */
+    private final File pluginFile;
 
+    /**
+     * The plugin bundle type
+     */
+    private final FileBundle fileBundle;
+
+    /**
+     * boolean to know overwrite status
+     */
+    private final boolean overwrite;
+
+    /**
+     * Default constructor
+     *
+     * @param pluginFile Plugin file
+     * @param fileBundle Plugin bundle type
+     * @param overwrite  Overwrite plugin in vRO
+     */
     public PluginFileInfo(File pluginFile, FileBundle fileBundle, boolean overwrite) {
         this.pluginFile = pluginFile;
         this.fileBundle = fileBundle;
         this.overwrite = overwrite;
     }
 
+    /**
+     * Getter for <code>pluginFile</code>
+     *
+     * @return Plugin file
+     */
     public File getPluginFile() {
         return pluginFile;
     }
 
-    public void setPluginFile(File pluginFile) {
-        this.pluginFile = pluginFile;
-    }
-
+    /**
+     * Getter for <code>fileBundle</code>
+     *
+     * @return {@link FileBundle} type
+     */
     public FileBundle getFileBundle() {
         return fileBundle;
     }
 
-    public void setFileBundle(FileBundle fileBundle) {
-        this.fileBundle = fileBundle;
-    }
-
+    /**
+     * Getter for <code>overwrite</code>
+     *
+     * @return boolean to know overwrite status
+     */
     public boolean isOverwrite() {
         return overwrite;
-    }
-
-    public void setOverwrite(boolean overwrite) {
-        this.overwrite = overwrite;
     }
 
 
